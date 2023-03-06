@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  backend:
+    container_name: processing_image_backend
+    image: bangtx/jfga_backend
+    env_file: backend/.env
+    volumes:
+      - ./backend:/app/backend
+    ports:
+      - '2100:2100'
+    depends_on:
+      - db
+    entrypoint: [ "poetry", "run" ]
+    command: [ "uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "2100" ]
+  db:
+    container_name: processing_image_db
+    image: postgres:14
+    ports:
+      - "2200:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=default
+    volumes:
+      - db14:/var/lib/postgresql/data
+
+volumes:
+  db14:
+    driver: local

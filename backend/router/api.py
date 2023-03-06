@@ -3,11 +3,11 @@ from router import user, processing_image
 
 router = APIRouter()
 
-router.include_router(
-    user.router,
-    prefix='/user',
-    tags=['User']
-)
+# router.include_router(
+#     user.router,
+#     prefix='/user',
+#     tags=['User']
+# )
 
 router.include_router(
     processing_image.router,
